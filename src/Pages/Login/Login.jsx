@@ -1,9 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { loadCaptchaEnginge, LoadCanvasTemplate, validateCaptcha } from 'react-simple-captcha';
+import { AuthContext } from '../../providers/AuthProvider';
+import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const Login = () => {
     const captchaRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
+    const { signIn } = useContext(AuthContext);
 
     useEffect( () => {
         loadCaptchaEnginge(6); 
@@ -15,6 +19,11 @@ const Login = () => {
         const email = form.email.value;
         const password = form.password.value;
         console.log(email, password);
+        signIn(email, password)
+        .then(result => {
+            const user = result.user;
+            console.log(user); 
+        })
     }
 
     const handleValidateCaptcha = () => {
@@ -27,7 +36,11 @@ const Login = () => {
     }
 
   return (
-    <div className="hero bg-base-200 min-h-screen">
+    <>
+      <Helmet>
+          <title>Cafeteria | Login</title>
+      </Helmet>
+      <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
         <div className="text-center w-1/2 lg:text-left">
           <h1 className="text-5xl font-bold">Login now!</h1>
@@ -86,9 +99,11 @@ const Login = () => {
               <input disabled={disabled} type="submit" className="btn btn-primary" value="Login" />
             </div>
           </form>
+          <p><small>New Here? <Link to="/signUp">Create an Account</Link></small></p>
         </div>
       </div>
     </div>
+    </>
   );
 };
 
