@@ -24,76 +24,105 @@ export const router = createBrowserRouter([
     path: "/",
     element: <Main />,
     children: [
-        {
-            path: "/",
-            element: <Home></Home>
-        },
-        {
-          path: "/menu",
-          element: <Menu></Menu>
-        },
-        {
-          path: "/order/:category",
-          element: <Order></Order>
-        },
-        {
-          path: "/login",
-          element: <Login></Login>
-        },
-        {
-          path: "/signUp",
-          element: <SignUp></SignUp>
-        },
-        {
-          path: "/secret",
-          element: <PrivateRoute><Secret></Secret></PrivateRoute>
-        }
-    ]
+      {
+        path: "/",
+        element: <Home></Home>,
+      },
+      {
+        path: "/menu",
+        element: <Menu></Menu>,
+      },
+      {
+        path: "/order/:category",
+        element: <Order></Order>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
+      },
+      {
+        path: "/signUp",
+        element: <SignUp></SignUp>,
+      },
+      {
+        path: "/secret",
+        element: (
+          <PrivateRoute>
+            <Secret></Secret>
+          </PrivateRoute>
+        ),
+      },
+    ],
   },
   {
     path: "/dashboard",
-    element: <PrivateRoute><Dashboard /></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <Dashboard />
+      </PrivateRoute>
+    ),
     children: [
       // user routes
       {
-        path: '/dashboard/userHome',
-        element: <UserHome></UserHome>
+        path: "/dashboard/userHome",
+        element: <UserHome></UserHome>,
       },
       {
-        path: '/dashboard/cart',
-        element: <Cart></Cart>
+        path: "/dashboard/cart",
+        element: <Cart></Cart>,
       },
       {
-        path: '/dashboard/payment',
-        element: <Payment></Payment>
+        path: "/dashboard/payment",
+        element: <Payment></Payment>,
       },
       {
-        path: '/dashboard/paymentHistory',
-        element: <PaymentHistory></PaymentHistory>
+        path: "/dashboard/paymentHistory",
+        element: <PaymentHistory></PaymentHistory>,
       },
 
       // Admin Routes
       {
-        path: '/dashboard/adminHome',
-        element: <AdminRoute><AdminHome></AdminHome></AdminRoute>
+        path: "/dashboard/adminHome",
+        element: (
+          <AdminRoute>
+            <AdminHome></AdminHome>
+          </AdminRoute>
+        ),
       },
       {
-        path: '/dashboard/users',
-        element: <AdminRoute><AllUsers></AllUsers></AdminRoute>
+        path: "/dashboard/users",
+        element: (
+          <AdminRoute>
+            <AllUsers></AllUsers>
+          </AdminRoute>
+        ),
       },
       {
-        path: '/dashboard/addItems',
-        element: <AdminRoute><AddItems></AddItems></AdminRoute>
+        path: "/dashboard/addItems",
+        element: (
+          <AdminRoute>
+            <AddItems></AddItems>
+          </AdminRoute>
+        ),
       },
       {
-        path: '/dashboard/updateItem/:id',
-        element: <AdminRoute><UpdateItem></UpdateItem></AdminRoute>,
-        loader: ({params}) => fetch(`http://localhost:5000/menu/${params.id}`)
+        path: "/dashboard/updateItem/:id",
+        element: (
+          <AdminRoute>
+            <UpdateItem></UpdateItem>
+          </AdminRoute>
+        ),
+        loader: ({ params }) =>
+          fetch(`https://cafeteria-server-dun.vercel.app/menu/${params.id}`),
       },
       {
-        path: '/dashboard/manageItems',
-        element: <AdminRoute><ManageItems></ManageItems></AdminRoute>
-      }
-    ]
-  }
+        path: "/dashboard/manageItems",
+        element: (
+          <AdminRoute>
+            <ManageItems></ManageItems>
+          </AdminRoute>
+        ),
+      },
+    ],
+  },
 ]);
